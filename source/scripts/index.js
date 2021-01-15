@@ -9,6 +9,8 @@ const weekdays = {
   5: "Friday",
   6: "Saturday",
 };
+const searchSubmit = document.querySelector(".search__submit");
+const searchInput = document.querySelector(".search__input");
 
 // ----- API REQUESTS -----
 
@@ -126,3 +128,12 @@ const getCurrentDay = function () {
 // Get weather Data for current location - if not possible, default to Melbourne, Aus
 
 getCurrentLocation();
+
+// ----- EVENT LISTENERS -----
+
+searchSubmit.addEventListener("click", () => {
+  const city = searchInput.value;
+  getWeather(
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=16c3e8bb211544cefedaf6ff65aa87c5`
+  );
+});

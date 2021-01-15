@@ -17,7 +17,6 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
 }
 
 .main-display {
@@ -65,19 +64,31 @@ html {
 }
 
 .search {
-  position: absolute;
-  right: -1.5rem;
-  top: -1.5rem;
-  height: 8rem;
-  width: 8rem;
-  background-color: orangered;
-  clip-path: circle(50%);
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: row;
+  background-color: #f2f2f2;
+  border-radius: 0.6rem;
 }
-.search:hover {
-  width: 100%;
-  right: 0;
-  top: 0;
-  clip-path: none;
+.search__input {
+  padding: 0.75rem 1rem;
+  background-color: #f2f2f2;
+  outline: none;
+  border: none;
+  width: 50vw;
+  transition: all 0.3s;
+  border-radius: 0.6rem;
+}
+.search__input:hover {
+  width: 65vw;
+}
+.search__submit {
+  background-color: #f2f2f2;
+  border-radius: 0.6rem;
+  outline: none;
+  border: none;
+  transform: translateX(-1rem);
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=main.css.map */
