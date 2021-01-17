@@ -9,6 +9,11 @@ const weekdays = {
   5: "Friday",
   6: "Saturday",
 };
+
+const weatherIcons = {
+  "clear sky": "../source/img/clear-day.svg",
+  "broken clouds": "../source/img/partly-cloudy-day.svg",
+};
 const searchSubmit = document.querySelector(".search__submit");
 const searchInput = document.querySelector(".search__input");
 
@@ -21,7 +26,7 @@ const getCurrentLocation = function () {
       `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=16c3e8bb211544cefedaf6ff65aa87c5`
     );
     getForecast(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=16c3e8bb211544cefedaf6ff65aa87c5`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exlude=minutely,hourly&appid=16c3e8bb211544cefedaf6ff65aa87c5`
     );
   });
 };
@@ -30,10 +35,14 @@ const getWeather = function (url) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      console.log(data); // DELETE WHEN FINISHED
       renderCurrentLocation(data.name);
       renderCurrentTemperature(convertToCelsius(data.main.temp));
       renderWeatherDescription(data.weather[0].description);
+      renderIcon(data.weather[0].description);
+      renderHumidity(data.main.humidity);
+      renderFeelsLike(data.main["feels_like"]);
+      renderWind(data.wind.speed);
     })
     .catch((err) =>
       console.error("Error whilst attempting to fetch weather data")
@@ -44,7 +53,7 @@ const getForecast = function (url) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      console.log(data); // DELETE WHEN FINISHED
       renderForecast(getCurrentDay(), data);
     })
     .catch((err) =>
@@ -70,12 +79,38 @@ const renderWeatherDescription = function (weather) {
   const descriptionDisplay = document.querySelector(
     ".main-display__description"
   );
-  console.log(weather);
   weather = weather
     .split(" ")
     .map((word) => word[0].toUpperCase() + word.slice(1, word.length))
     .join(" ");
   descriptionDisplay.textContent = weather;
+};
+
+const renderIcon = function (weather) {
+  const locationDisplay = document.querySelector(".main-display__location");
+  const widget = document.createElement("img");
+  widget.className = "main-display__widget";
+  widget.src = weatherIcons[weather];
+  locationDisplay.parentNode.insertBefore(widget, locationDisplay.nextSibling);
+};
+
+const renderHumidity = function (humidity) {
+  const humidityDisplay = document.querySelector(".main-display__humidity");
+  humidityDisplay.textContent = `Humidity: ${humidity}%`;
+};
+
+const renderFeelsLike = function (temperature) {
+  const temperatureDisplay = document.querySelector(
+    ".main-display__feels-like"
+  );
+  temperatureDisplay.textContent = `Feels Like: ${convertToCelsius(
+    temperature
+  )}°C`;
+};
+
+const renderWind = function (wind) {
+  const windDisplay = document.querySelector(".main-display__wind");
+  windDisplay.textContent = `Wind speed: ${wind}km/hr`;
 };
 
 const renderForecast = function (currentDay, data) {
@@ -91,10 +126,11 @@ const renderForecast = function (currentDay, data) {
     }
 
     // Populate forecast containers
-    let targetDay = document.querySelector(`.forecast__row__day--${i}`);
+    let targetDay = document.querySelector(`.forecast__card__day--${i}`);
     let targetTemperature = document.querySelector(
-      `.forecast__row__temperature--${i}`
+      `.forecast__card__temperature--${i}`
     );
+    let targetIcon = document.querySelector(`.forecast__card__icon--${i}`);
     if (positionInForecast == 0) {
       targetDay.textContent = "Today";
     } else {

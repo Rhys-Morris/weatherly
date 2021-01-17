@@ -3,87 +3,131 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: $color-background-base;
+  width: 70vw;
+  padding: 0 15vw;
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5vh;
+  width: 100%;
+
+  &__search {
+    display: flex;
+    flex-direction: row;
+    background-color: $font-text;
+    border-radius: 0.2rem;
+    position: relative;
+    &__input {
+      font-size: 1rem;
+      padding: 0.5rem 0.75rem;
+      background-color: $font-text;
+      outline: none;
+      border: none;
+      width: 30vw;
+      transition: all 0.3s;
+      border-radius: 0.6rem;
+    }
+    &__submit {
+      position: absolute;
+      right: -1rem;
+      top: -0.5rem;
+      height: 3rem;
+      width: 3rem;
+      border: 1px solid $color-background-base;
+      border-radius: 50%;
+      background: $font-text;
+      outline: none;
+      transition: 0.2s all;
+      cursor: pointer;
+
+      &:hover {
+        background: orangered;
+      }
+    }
+
+    &__icon {
+      height: 1.5rem;
+    }
+  }
 }
 
 .main-display {
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   height: 60vh;
-  width: 95vw;
-  background-position: center;
-  background-size: cover;
-  //   clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  color: #f2f2f2;
+  width: 50%;
+  margin-top: 5vh;
+  border-radius: 2rem;
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__extras {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
 
   &__location {
-    font-size: 4rem;
+    font-size: 2.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 300;
-    padding-top: 20rem;
-    padding-bottom: 2rem;
   }
   &__description {
-    font-size: 1.6rem;
+    font-size: 1rem;
+    letter-spacing: 2px;
     padding-bottom: 1rem;
   }
   &__temperature {
-    font-size: 4rem;
+    font-size: 5rem;
+    font-weight: 200;
+  }
+
+  &__widget {
+    height: 15rem;
   }
 }
 
 .forecast {
-  margin-top: 15rem;
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    width: 80vw;
-    color: white;
+  display: flex;
+  margin-top: 7.5vh;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+
+  &__header {
     text-transform: uppercase;
-    font-size: 1.4rem;
-    padding-bottom: 1rem;
+    letter-spacing: 2px;
+    margin-top: 7.5vh;
+  }
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    width: 10rem;
+    padding: 3rem;
+    border-radius: 2rem;
     &__day {
+      margin-bottom: 1rem;
     }
     &__temperature {
     }
     &__icon {
     }
-  }
-
-  &__seperator {
-    display: flex;
-  }
-}
-
-.search {
-  margin-top: 5vh;
-  display: flex;
-  flex-direction: row;
-  background-color: #f2f2f2;
-  border-radius: 0.6rem;
-  &__input {
-    padding: 0.75rem 1rem;
-    background-color: #f2f2f2;
-    outline: none;
-    border: none;
-    width: 50vw;
-    transition: all 0.3s;
-    border-radius: 0.6rem;
-
-    &:hover {
-      width: 65vw;
-    }
-  }
-
-  &__submit {
-    background-color: #f2f2f2;
-    border-radius: 0.6rem;
-    outline: none;
-    border: none;
-    transform: translateX(-1rem);
-    cursor: pointer;
   }
 }

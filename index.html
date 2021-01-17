@@ -4,63 +4,93 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weatherly</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./build/main.css" />
   </head>
   <body>
     <div class="wrapper">
-      <div class="search">
-        <input type="text" class="search__input" placeholder="Search" />
-        <button class="search__submit">&#x1F50D;</button>
-      </div>
+      <header class="header">
+        <div class="header__toggle">
+          <input type="checkbox" />
+          <span class="header__toggle__slider"></span>
+        </div>
+        <div class="header__search">
+          <input
+            type="text"
+            class="header__search__input"
+            placeholder="Search by city name"
+          />
+          <button class="header__search__submit">
+            <img
+              class="header__search__icon"
+              src="./source/img/lnr-magnifier.svg"
+              alt=""
+            />
+          </button>
+        </div>
+        <div class="header__home">Home</div>
+      </header>
       <div class="main-display">
-        <div class="main-display__location"></div>
-        <div class="main-display__description"></div>
-        <div class="main-display__temperature"></div>
+        <div class="main-display__main">
+          <div class="main-display__location"></div>
+          <div class="main-display__description"></div>
+          <div class="main-display__temperature"></div>
+        </div>
+        <div class="main-display__extras">
+          <div class="main-display__feels-like"></div>
+          <div class="main-display__humidity"></div>
+          <div class="main-display__wind"></div>
+        </div>
       </div>
+      <h2 class="forecast__header">Five Day Forecast</h2>
       <div class="forecast">
-        <div class="forecast__row forecast__row--1">
-          <div class="forecast__row__day forecast__row__day--1">Today</div>
+        <div class="forecast__card forecast__card--1">
+          <div class="forecast__card__day forecast__card__day--1">Today</div>
           <div class="forecast__seperator">
             <div
-              class="forecast__row__temperature forecast__row__temperature--1"
+              class="forecast__card__temperature forecast__card__temperature--1"
             ></div>
-            <div class="forecast__row__icon forecast__row__icon--1"></div>
+            <div class="forecast__card__icon forecast__card__icon--1"></div>
           </div>
         </div>
-        <div class="forecast__row forecast__row--2">
-          <div class="forecast__row__day forecast__row__day--2"></div>
+        <div class="forecast__card forecast__card--2">
+          <div class="forecast__card__day forecast__card__day--2"></div>
           <div class="forecast__seperator">
             <div
-              class="forecast__row__temperature forecast__row__temperature--2"
+              class="forecast__card__temperature forecast__card__temperature--2"
             ></div>
-            <div class="forecast__row__icon forecast__row__icon--2"></div>
+            <div class="forecast__card__icon forecast__card__icon--2"></div>
           </div>
         </div>
-        <div class="forecast__row forecast__row--3">
-          <div class="forecast__row__day forecast__row__day--3"></div>
+        <div class="forecast__card forecast__card--3">
+          <div class="forecast__card__day forecast__card__day--3"></div>
           <div class="forecast__seperator">
             <div
-              class="forecast__row__temperature forecast__row__temperature--3"
+              class="forecast__card__temperature forecast__card__temperature--3"
             ></div>
-            <div class="forecast__row__icon forecast__row__icon--3"></div>
+            <div class="forecast__card__icon forecast__card__icon--3"></div>
           </div>
         </div>
-        <div class="forecast__row forecast__row--4">
-          <div class="forecast__row__day forecast__row__day--4"></div>
+        <div class="forecast__card forecast__card--4">
+          <div class="forecast__card__day forecast__card__day--4"></div>
           <div class="forecast__seperator">
             <div
-              class="forecast__row__temperature forecast__row__temperature--4"
+              class="forecast__card__temperature forecast__card__temperature--4"
             ></div>
-            <div class="forecast__row__icon forecast__row__icon--4"></div>
+            <div class="forecast__card__icon forecast__card__icon--4"></div>
           </div>
         </div>
-        <div class="forecast__row forecast__row--5">
-          <div class="forecast__row__day forecast__row__day--5"></div>
+        <div class="forecast__card forecast__card--5">
+          <div class="forecast__card__day forecast__card__day--5"></div>
           <div class="forecast__seperator">
             <div
-              class="forecast__row__temperature forecast__row__temperature--5"
+              class="forecast__card__temperature forecast__card__temperature--5"
             ></div>
-            <div class="forecast__row__icon forecast__row__icon--5"></div>
+            <div class="forecast__card__icon forecast__card__icon--5"></div>
           </div>
         </div>
       </div>
