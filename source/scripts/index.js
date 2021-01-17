@@ -1,4 +1,8 @@
+import cities from "cities.json";
+
 // ----- GLOBAL VARIABLES -----
+
+console.log(cities);
 
 const weekdays = {
   0: "Sunday",
@@ -11,11 +15,30 @@ const weekdays = {
 };
 
 const weatherIcons = {
-  "clear sky": "../source/img/clear-day.svg",
-  "broken clouds": "../source/img/partly-cloudy-day.svg",
+  "01d": "../source/img/clear-day.svg",
+  "01n": "../source/img/clear-night.svg",
+  "02d": "../source/img/partly-cloudy-day.svg",
+  "02n": "../source/img/partly-cloudy-night.svg",
+  "03d": "../source/img/cloudy.svg",
+  "03n": "../source/img/cloudy.svg",
+  "04d": "../source/img/partly-cloudy-day.svg",
+  "04n": "../source/img/partly-cloudy-night.svg",
+  "09d": "../source/img/partly-cloudy-day-drizzle.svg",
+  "09n": "../source/img/partly-cloudy-night-drizzle.svg",
+  "10d": "../source/img/rain.svg",
+  "10n": "../source/img/rain.svg",
+  "11d": "../source/img/thunderstorms.svg",
+  "11n": "../source/img/thunderstorms.svg",
+  "13d": "../source/img/snow.svg",
+  "13n": "../source/img/snow.svg",
+  "50d": "../source/img/mist.svg",
+  "50n": "../source/img/mist.svg",
 };
-const searchSubmit = document.querySelector(".search__submit");
-const searchInput = document.querySelector(".search__input");
+
+let filteredCities = [];
+
+// HTML Elements
+const searchInput = document.querySelector(".header__search__input");
 
 // ----- API REQUESTS -----
 
@@ -39,7 +62,7 @@ const getWeather = function (url) {
       renderCurrentLocation(data.name);
       renderCurrentTemperature(convertToCelsius(data.main.temp));
       renderWeatherDescription(data.weather[0].description);
-      renderIcon(data.weather[0].description);
+      renderIcon(data.weather[0].icon);
       renderHumidity(data.main.humidity);
       renderFeelsLike(data.main["feels_like"]);
       renderWind(data.wind.speed);
@@ -86,11 +109,11 @@ const renderWeatherDescription = function (weather) {
   descriptionDisplay.textContent = weather;
 };
 
-const renderIcon = function (weather) {
+const renderIcon = function (icon) {
   const locationDisplay = document.querySelector(".main-display__location");
   const widget = document.createElement("img");
   widget.className = "main-display__widget";
-  widget.src = weatherIcons[weather];
+  widget.src = weatherIcons[icon];
   locationDisplay.parentNode.insertBefore(widget, locationDisplay.nextSibling);
 };
 
@@ -139,6 +162,12 @@ const renderForecast = function (currentDay, data) {
     targetTemperature.textContent = `${convertToCelsius(
       data.daily[positionInForecast].temp.max
     )}°C `;
+
+    let widget = document.createElement("img");
+    widget.className = "forecast__card__icon__widget";
+    widget.src = weatherIcons[data.daily[positionInForecast].weather[0].icon];
+    targetDay.parentNode.insertBefore(widget, targetDay.nextSibling);
+
     positionInForecast++;
   }
 };
@@ -167,9 +196,10 @@ getCurrentLocation();
 
 // ----- EVENT LISTENERS -----
 
-searchSubmit.addEventListener("click", () => {
-  const city = searchInput.value;
-  getWeather(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=16c3e8bb211544cefedaf6ff65aa87c5`
+searchInput.addEventListener("keyup", () => {
+  const selectedCity = searchInput.value.toLowerCase();
+  filteredCities = cities.filter((city) =>
+    city.name.toLowerCase().match(selectedCity)
   );
+  console.log(filteredCities);
 });
