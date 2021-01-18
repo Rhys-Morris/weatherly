@@ -93,8 +93,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
-    align-self: center;
     font-size: 1.6rem;
   }
 
@@ -112,6 +110,20 @@
   &__temperature {
     font-size: 10rem;
     font-weight: 200;
+  }
+
+  &__feels-like,
+  &__humidity,
+  &__wind,
+  &__uv,
+  &__sunset,
+  &__sunrise {
+    font-size: 2rem;
+    padding: 1rem 0;
+
+    span {
+      margin-right: 1rem;
+    }
   }
 
   &__widget {
@@ -147,20 +159,23 @@
     margin-bottom: 1rem;
     width: 7rem;
     padding: 5rem 10rem;
-    background-color: #e5e5e5;
-    color: #444;
+    border: 2px solid $font-text;
+    color: $font-text;
     border-radius: 0.5rem;
     &__day {
+      font-size: 2.5rem;
+      font-weight: 300;
       margin-bottom: 0.5rem;
     }
     &__temperature {
-      font-size: 5rem;
+      font-size: 6rem;
       font-weight: 200;
     }
     &__icon {
       &__widget {
         height: 8rem;
         position: relative;
+        margin-bottom: 1rem;
       }
     }
   }

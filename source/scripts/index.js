@@ -1,7 +1,6 @@
 import cities from "cities.json";
-import { divide } from "lodash";
 
-// ----- GLOBAL VARIABLES -----
+// ---------- GLOBAL VARIABLES -----------
 
 console.log(cities);
 
@@ -42,7 +41,7 @@ let filteredCities = [];
 const searchInput = document.querySelector(".header__search__input");
 const resultsBox = document.querySelector(".header__search__results");
 
-// ----- API REQUESTS -----
+// ---------- API REQUESTS -----------
 
 const getCurrentLocation = function () {
   navigator.geolocation.getCurrentPosition((data) => {
@@ -68,10 +67,10 @@ const getWeather = function (url) {
       renderHumidity(data.main.humidity);
       renderFeelsLike(data.main["feels_like"]);
       renderWind(data.wind.speed);
-    });
-  // .catch((err) =>
-  //   console.error("Error whilst attempting to fetch weather data")
-  // );
+    })
+    .catch((err) =>
+      console.error("Error whilst attempting to fetch weather data")
+    );
 };
 
 const getForecast = function (url) {
@@ -80,13 +79,18 @@ const getForecast = function (url) {
     .then((data) => {
       console.log(data); // DELETE WHEN FINISHED
       renderForecast(getCurrentDay(), data);
-    });
-  // .catch((err) =>
-  //   console.error("Error whilst attempting to fetch weather data")
-  // );
+      renderUv(data.current.uvi);
+      renderSunrise(data.current.sunrise);
+      renderSunset(data.current.sunset);
+    })
+    .catch((err) =>
+      console.error("Error whilst attempting to fetch weather data")
+    );
 };
 
-// ----- RENDER FUNCTIONS -----
+// ----------- RENDER FUNCTIONS -----------
+
+// MAIN DISPLAY
 
 const renderCurrentLocation = function (location) {
   const locationDisplay = document.querySelector(".main-display__location");
@@ -121,22 +125,41 @@ const renderIcon = function (icon) {
 
 const renderHumidity = function (humidity) {
   const humidityDisplay = document.querySelector(".main-display__humidity");
-  humidityDisplay.textContent = `Humidity: ${humidity}%`;
+  humidityDisplay.innerHTML = `<span>Humidity:</span> ${humidity}%`;
 };
 
 const renderFeelsLike = function (temperature) {
   const temperatureDisplay = document.querySelector(
     ".main-display__feels-like"
   );
-  temperatureDisplay.textContent = `Feels Like: ${convertToCelsius(
+  temperatureDisplay.innerHTML = `<span>Feels Like:</span> ${convertToCelsius(
     temperature
   )}°C`;
 };
 
 const renderWind = function (wind) {
   const windDisplay = document.querySelector(".main-display__wind");
-  windDisplay.textContent = `Wind speed: ${wind}km/hr`;
+  windDisplay.innerHTML = `<span>Wind speed:</span> ${wind}km/hr`;
 };
+
+const renderUv = function (uv) {
+  const uvDisplay = document.querySelector(".main-display__uv");
+  uvDisplay.innerHTML = `<span>UV Index:</span> ${uv}`;
+};
+
+const renderSunrise = function (sunrise) {
+  const sunriseDisplay = document.querySelector(".main-display__sunrise");
+  const timeString = convertTimestamp(sunrise * 1000);
+  sunriseDisplay.innerHTML = `<span>Sunrise: </span> ${timeString}`;
+};
+
+const renderSunset = function (sunset) {
+  const sunsetDisplay = document.querySelector(".main-display__sunset");
+  const timeString = convertTimestamp(sunset * 1000);
+  sunsetDisplay.innerHTML = `<span>Sunset: </span> ${timeString}`;
+};
+
+// FORECAST
 
 const renderForecast = function (currentDay, data) {
   // Set loop to populate correct CSS class
@@ -148,7 +171,7 @@ const renderForecast = function (currentDay, data) {
     let targetTemperature = document.querySelector(
       `.forecast__card__temperature--${i}`
     );
-    let targetIcon = document.querySelector(`.forecast__card__icon--${i}`);
+
     if (positionInForecast == 0) {
       targetDay.textContent = "Today";
     } else {
@@ -228,6 +251,11 @@ const convertToFahrenheit = function (kelvin) {
 const getCurrentDay = function () {
   const currentDate = new Date();
   return currentDate.getDay();
+};
+
+const convertTimestamp = function (timestamp) {
+  const date = new Date(timestamp);
+  return `${date.getHours()}:${date.getMinutes()}`;
 };
 
 // ------ APPLICATION LOGIC -----
