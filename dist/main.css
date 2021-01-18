@@ -63,11 +63,22 @@ html {
   position: relative;
   top: 0.1rem;
 }
+.header__search__results {
+  position: absolute;
+}
 .header__search__results__city {
-  width: 100%;
-  color: white;
-  background-color: orangered;
-  border: 1px solid white;
+  position: relative;
+  font-size: 1.4rem;
+  left: 2px;
+  width: 28.2vw;
+  padding: 1.5rem 2.25rem;
+  color: #444;
+  background-color: #f2f2f2;
+  border-top: 3px solid #0a2646;
+}
+.header__search__results__city:hover {
+  cursor: pointer;
+  background-color: #bfbfbf;
 }
 .main-display {
   display: flex;

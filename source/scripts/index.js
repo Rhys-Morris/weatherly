@@ -68,10 +68,10 @@ const getWeather = function (url) {
       renderHumidity(data.main.humidity);
       renderFeelsLike(data.main["feels_like"]);
       renderWind(data.wind.speed);
-    })
-    .catch((err) =>
-      console.error("Error whilst attempting to fetch weather data")
-    );
+    });
+  // .catch((err) =>
+  //   console.error("Error whilst attempting to fetch weather data")
+  // );
 };
 
 const getForecast = function (url) {
@@ -80,10 +80,10 @@ const getForecast = function (url) {
     .then((data) => {
       console.log(data); // DELETE WHEN FINISHED
       renderForecast(getCurrentDay(), data);
-    })
-    .catch((err) =>
-      console.error("Error whilst attempting to fetch weather data")
-    );
+    });
+  // .catch((err) =>
+  //   console.error("Error whilst attempting to fetch weather data")
+  // );
 };
 
 // ----- RENDER FUNCTIONS -----
@@ -143,13 +143,6 @@ const renderForecast = function (currentDay, data) {
 
   let positionInForecast = 0;
   for (let i = 1; i < 6; i++) {
-    // Increment the day
-
-    currentDay++;
-    if (currentDay == 7) {
-      currentDay = 0;
-    }
-
     // Populate forecast containers
     let targetDay = document.querySelector(`.forecast__card__day--${i}`);
     let targetTemperature = document.querySelector(
@@ -165,11 +158,19 @@ const renderForecast = function (currentDay, data) {
       data.daily[positionInForecast].temp.max
     )}°C `;
 
+    // Create Widget
     let widget = document.createElement("img");
     widget.className = "forecast__card__icon__widget";
     widget.src = weatherIcons[data.daily[positionInForecast].weather[0].icon];
     targetDay.parentNode.insertBefore(widget, targetDay.nextSibling);
 
+    // Increment current day
+    currentDay++;
+    if (currentDay == 7) {
+      currentDay = 0;
+    }
+
+    // Increment position in forecast
     positionInForecast++;
   }
 };
@@ -179,9 +180,38 @@ const renderForecast = function (currentDay, data) {
 const renderResult = function (city) {
   const result = document.createElement("div");
   result.className = "header__search__results__city";
-  result.textContent = city.name;
+  result.textContent = `${city.name}, ${city.country}`;
+
+  // Add latitude and longitude as data attributes
+  result.dataset.latitide = Number(city.lat).toFixed(4);
+  result.dataset.longitude = Number(city.lng).toFixed(4);
+
   // Append to results div
   resultsBox.appendChild(result);
+
+  // Add event listener - if clicked
+  result.addEventListener("click", function () {
+    // Remove widgets
+    document
+      .querySelectorAll(".forecast__card")
+      .forEach((card) => card.removeChild(card.childNodes[2]));
+    document
+      .querySelector(".main-display__main")
+      .removeChild(document.querySelector(".main-display__widget"));
+
+    console.log(this);
+
+    // Call weather API with new location
+    getWeather(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${this.dataset.latitide}&lon=${this.dataset.longitude}&appid=16c3e8bb211544cefedaf6ff65aa87c5`
+    );
+    getForecast(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${this.dataset.latitide}&lon=${this.dataset.longitude}&exlude=minutely,hourly&appid=16c3e8bb211544cefedaf6ff65aa87c5`
+    );
+
+    // Remove results
+    resultsBox.innerHTML = "";
+  });
 };
 
 // ----- HELPER FUNCTIONS -----
@@ -210,6 +240,12 @@ getCurrentLocation();
 
 searchInput.addEventListener("keyup", () => {
   const selectedCity = searchInput.value.toLowerCase();
+
+  // If empty remove all results and return
+  if (selectedCity == "") {
+    resultsBox.innerHTML = "";
+    return;
+  }
 
   // Filter possible cities and reduce ot list of ten
   filteredCities = cities
