@@ -203,13 +203,19 @@ const renderForecast = function (currentDay, data) {
 const renderResult = function (city) {
   const result = document.createElement("div");
   result.className = "header__search__results__city";
-  result.textContent = `${city.name}, ${city.country}`;
+  const resultText = document.createElement("span");
+  const resultFlag = document.createElement("img");
+
+  resultText.textContent = `${city.name}`;
+  resultFlag.src = `https://www.countryflags.io/${city.country}/flat/24.png`;
 
   // Add latitude and longitude as data attributes
   result.dataset.latitide = Number(city.lat).toFixed(4);
   result.dataset.longitude = Number(city.lng).toFixed(4);
 
   // Append to results div
+  result.appendChild(resultText);
+  result.appendChild(resultFlag);
   resultsBox.appendChild(result);
 
   // Add event listener - if clicked
