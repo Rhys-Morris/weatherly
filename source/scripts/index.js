@@ -1,4 +1,5 @@
 import cities from "cities.json";
+import { divide } from "lodash";
 
 // ----- GLOBAL VARIABLES -----
 
@@ -39,6 +40,7 @@ let filteredCities = [];
 
 // HTML Elements
 const searchInput = document.querySelector(".header__search__input");
+const resultsBox = document.querySelector(".header__search__results");
 
 // ----- API REQUESTS -----
 
@@ -172,6 +174,16 @@ const renderForecast = function (currentDay, data) {
   }
 };
 
+// Render City information
+
+const renderResult = function (city) {
+  const result = document.createElement("div");
+  result.className = "header__search__results__city";
+  result.textContent = city.name;
+  // Append to results div
+  resultsBox.appendChild(result);
+};
+
 // ----- HELPER FUNCTIONS -----
 
 const convertToCelsius = function (kelvin) {
@@ -198,8 +210,18 @@ getCurrentLocation();
 
 searchInput.addEventListener("keyup", () => {
   const selectedCity = searchInput.value.toLowerCase();
-  filteredCities = cities.filter((city) =>
-    city.name.toLowerCase().match(selectedCity)
-  );
+
+  // Filter possible cities and reduce ot list of ten
+  filteredCities = cities
+    .filter((city) => city.name.toLowerCase().match(selectedCity))
+    .slice(0, 10);
   console.log(filteredCities);
+
+  // Empty search results prior to repopulating
+  resultsBox.innerHTML = "";
+
+  // Render new result for each city
+  filteredCities.forEach(function (city) {
+    renderResult(city);
+  });
 });
