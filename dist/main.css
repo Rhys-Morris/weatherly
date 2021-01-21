@@ -18,8 +18,8 @@ html {
   flex-direction: column;
   align-items: center;
   background: #0a2646;
-  width: 80vw;
-  padding: 0 10vw;
+  width: 90vw;
+  padding: 0 5vw;
   min-height: 100vh;
 }
 
@@ -83,8 +83,29 @@ html {
   cursor: pointer;
   background-color: #bfbfbf;
 }
+.header__toggle {
+  display: flex;
+  align-content: center;
+  font-size: 2rem;
+}
+.header__toggle__celsius, .header__toggle__fahrenheit {
+  padding-bottom: 1rem;
+  transition: all 0.2s;
+}
+.header__toggle__celsius:hover, .header__toggle__fahrenheit:hover {
+  color: #bfbfbf;
+  cursor: pointer;
+}
+.header__toggle__celsius {
+  margin-right: 1rem;
+}
+.header__toggle__active {
+  border-bottom: 2px solid #f2f2f2;
+}
+
 .main-display {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 50%;
@@ -95,20 +116,19 @@ html {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 5vh;
 }
 .main-display__extras {
   display: flex;
-  flex-direction: column;
   justify-content: space-around;
   font-size: 1.6rem;
-  margin-left: 15rem;
 }
 .main-display__extras__container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 20vw;
+  width: 12vw;
 }
 .main-display__extras__widget {
   height: 5rem;
@@ -154,8 +174,8 @@ html {
   font-size: 3rem;
   font-weight: 300;
   letter-spacing: 2px;
-  margin-top: 7.5vh;
-  margin-bottom: 5vh;
+  margin-top: 10rem;
+  margin-bottom: 3rem;
 }
 .forecast__card {
   display: flex;

@@ -2,8 +2,6 @@ import cities from "cities.json";
 
 // ---------- GLOBAL VARIABLES -----------
 
-console.log(cities);
-
 const weekdays = {
   0: "Sunday",
   1: "Monday",
@@ -36,10 +34,12 @@ const weatherIcons = {
 };
 
 let filteredCities = [];
+let displayCelsius = true;
 
 // HTML Elements
 const searchInput = document.querySelector(".header__search__input");
 const resultsBox = document.querySelector(".header__search__results");
+const temperatureToggle = document.querySelector(".header__toggle");
 
 // ---------- API REQUESTS -----------
 
@@ -79,7 +79,7 @@ const getForecast = function (url) {
     .then((data) => {
       console.log(data); // DELETE WHEN FINISHED
       renderForecast(getCurrentDay(), data);
-      renderUv(data.current.uvi);
+      renderUv(data.daily[0].uvi);
       renderSunrise(data.current.sunrise);
       renderSunset(data.current.sunset);
     })
@@ -230,8 +230,6 @@ const renderResult = function (city) {
       .querySelector(".main-display__main")
       .removeChild(document.querySelector(".main-display__widget"));
 
-    console.log(this);
-
     // Call weather API with new location
     getWeather(
       `https://api.openweathermap.org/data/2.5/weather?lat=${this.dataset.latitide}&lon=${this.dataset.longitude}&appid=16c3e8bb211544cefedaf6ff65aa87c5`
@@ -298,4 +296,10 @@ searchInput.addEventListener("keyup", () => {
   filteredCities.forEach(function (city) {
     renderResult(city);
   });
+});
+
+//  Toggle Celsius/Fahrenheit
+
+temperatureToggle.addEventListener("click", (e) => {
+  console.log(e.target);
 });
