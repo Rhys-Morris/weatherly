@@ -124,39 +124,41 @@ const renderIcon = function (icon) {
 };
 
 const renderHumidity = function (humidity) {
-  const humidityDisplay = document.querySelector(".main-display__humidity");
+  const humidityDisplay = document.querySelector(
+    ".main-display__humidity__text"
+  );
   humidityDisplay.innerHTML = `<span>Humidity:</span> ${humidity}%`;
 };
 
 const renderFeelsLike = function (temperature) {
   const temperatureDisplay = document.querySelector(
-    ".main-display__feels-like"
+    ".main-display__feels-like__text"
   );
-  temperatureDisplay.innerHTML = `<span>Feels Like:</span> ${convertToCelsius(
+  temperatureDisplay.innerHTML = `Feels Like:  ${convertToCelsius(
     temperature
   )}°C`;
 };
 
 const renderWind = function (wind) {
-  const windDisplay = document.querySelector(".main-display__wind");
-  windDisplay.innerHTML = `<span>Wind speed:</span> ${wind}km/hr`;
+  const windDisplay = document.querySelector(".main-display__wind__text");
+  windDisplay.innerHTML = `Wind speed:   ${wind}km/hr`;
 };
 
 const renderUv = function (uv) {
-  const uvDisplay = document.querySelector(".main-display__uv");
-  uvDisplay.innerHTML = `<span>UV Index:</span> ${uv}`;
+  const uvDisplay = document.querySelector(".main-display__uv__text");
+  uvDisplay.innerHTML = `UV Index:   ${uv}`;
 };
 
 const renderSunrise = function (sunrise) {
-  const sunriseDisplay = document.querySelector(".main-display__sunrise");
+  const sunriseDisplay = document.querySelector(".main-display__sunrise__text");
   const timeString = convertTimestamp(sunrise * 1000);
-  sunriseDisplay.innerHTML = `<span>Sunrise: </span> ${timeString}`;
+  sunriseDisplay.innerHTML = `Sunrise:  ${timeString}`;
 };
 
 const renderSunset = function (sunset) {
-  const sunsetDisplay = document.querySelector(".main-display__sunset");
+  const sunsetDisplay = document.querySelector(".main-display__sunset__text");
   const timeString = convertTimestamp(sunset * 1000);
-  sunsetDisplay.innerHTML = `<span>Sunset: </span> ${timeString}`;
+  sunsetDisplay.innerHTML = `Sunset:  ${timeString}`;
 };
 
 // FORECAST
@@ -261,7 +263,9 @@ const getCurrentDay = function () {
 
 const convertTimestamp = function (timestamp) {
   const date = new Date(timestamp);
-  return `${date.getHours()}:${date.getMinutes()}`;
+  return `${String(date.getHours()).padStart(2, "0")}:${String(
+    date.getMinutes()
+  ).padStart(2, "0")}`;
 };
 
 // ------ APPLICATION LOGIC -----

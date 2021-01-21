@@ -80,7 +80,7 @@
 
 .main-display {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 50%;
   margin-top: 10vh;
@@ -97,6 +97,19 @@
     flex-direction: column;
     justify-content: space-around;
     font-size: 1.6rem;
+    margin-left: 15rem;
+
+    &__container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: 20vw;
+    }
+
+    &__widget {
+      height: 5rem;
+    }
   }
 
   &__location {
@@ -115,18 +128,23 @@
     font-weight: 200;
   }
 
-  &__feels-like,
-  &__humidity,
-  &__wind,
-  &__uv,
-  &__sunset,
-  &__sunrise {
+  &__feels-like__text,
+  &__humidity__text,
+  &__wind__text,
+  &__uv__text,
+  &__sunset__text,
+  &__sunrise__text {
     font-size: 2rem;
-    padding: 1rem 0;
+    text-align: center;
+  }
 
-    span {
-      margin-right: 1rem;
-    }
+  &__sunset__widget,
+  &__sunrise__widget,
+  &__feels-like__widget,
+  &__uv__widget,
+  &__wind__widget,
+  &__humidity__widget {
+    height: 6rem;
   }
 
   &__widget {

@@ -85,7 +85,7 @@ html {
 }
 .main-display {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 50%;
   margin-top: 10vh;
@@ -101,6 +101,17 @@ html {
   flex-direction: column;
   justify-content: space-around;
   font-size: 1.6rem;
+  margin-left: 15rem;
+}
+.main-display__extras__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 20vw;
+}
+.main-display__extras__widget {
+  height: 5rem;
 }
 .main-display__location {
   font-size: 5rem;
@@ -117,12 +128,12 @@ html {
   font-size: 10rem;
   font-weight: 200;
 }
-.main-display__feels-like, .main-display__humidity, .main-display__wind, .main-display__uv, .main-display__sunset, .main-display__sunrise {
+.main-display__feels-like__text, .main-display__humidity__text, .main-display__wind__text, .main-display__uv__text, .main-display__sunset__text, .main-display__sunrise__text {
   font-size: 2rem;
-  padding: 1rem 0;
+  text-align: center;
 }
-.main-display__feels-like span, .main-display__humidity span, .main-display__wind span, .main-display__uv span, .main-display__sunset span, .main-display__sunrise span {
-  margin-right: 1rem;
+.main-display__sunset__widget, .main-display__sunrise__widget, .main-display__feels-like__widget, .main-display__uv__widget, .main-display__wind__widget, .main-display__humidity__widget {
+  height: 6rem;
 }
 .main-display__widget {
   height: 20rem;
