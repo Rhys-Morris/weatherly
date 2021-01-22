@@ -61,7 +61,7 @@ const getWeather = function (url) {
     .then((data) => {
       console.log(data); // DELETE WHEN FINISHED
       renderCurrentLocation(data.name);
-      renderCurrentTemperature(convertToCelsius(data.main.temp));
+      renderCurrentTemperature(convertToCelsiusFromKelvin(data.main.temp));
       renderWeatherDescription(data.weather[0].description);
       renderIcon(data.weather[0].icon);
       renderHumidity(data.main.humidity);
@@ -78,14 +78,15 @@ const getForecast = function (url) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data); // DELETE WHEN FINISHED
+
       renderForecast(getCurrentDay(), data);
       renderUv(data.daily[0].uvi);
-      renderSunrise(data.current.sunrise);
-      renderSunset(data.current.sunset);
-    })
-    .catch((err) =>
-      console.error("Error whilst attempting to fetch weather data")
-    );
+      renderSunrise(data.current.sunrise, data.timezone);
+      renderSunset(data.current.sunset, data.timezone);
+    });
+  // .catch((err) =>
+  //   console.error("Error whilst attempting to fetch weather data")
+  // );
 };
 
 // ----------- RENDER FUNCTIONS -----------
@@ -134,7 +135,7 @@ const renderFeelsLike = function (temperature) {
   const temperatureDisplay = document.querySelector(
     ".main-display__feels-like__text"
   );
-  temperatureDisplay.innerHTML = `Feels Like:  ${convertToCelsius(
+  temperatureDisplay.innerHTML = `Feels Like:  ${convertToCelsiusFromKelvin(
     temperature
   )}°C`;
 };
@@ -149,15 +150,16 @@ const renderUv = function (uv) {
   uvDisplay.innerHTML = `UV Index:   ${uv}`;
 };
 
-const renderSunrise = function (sunrise) {
+const renderSunrise = function (sunrise, timezone) {
+  console.log(timezone);
   const sunriseDisplay = document.querySelector(".main-display__sunrise__text");
-  const timeString = convertTimestamp(sunrise * 1000);
+  const timeString = convertTimestamp(sunrise * 1000, timezone);
   sunriseDisplay.innerHTML = `Sunrise:  ${timeString}`;
 };
 
-const renderSunset = function (sunset) {
+const renderSunset = function (sunset, timezone) {
   const sunsetDisplay = document.querySelector(".main-display__sunset__text");
-  const timeString = convertTimestamp(sunset * 1000);
+  const timeString = convertTimestamp(sunset * 1000, timezone);
   sunsetDisplay.innerHTML = `Sunset:  ${timeString}`;
 };
 
@@ -179,7 +181,7 @@ const renderForecast = function (currentDay, data) {
     } else {
       targetDay.textContent = weekdays[currentDay];
     }
-    targetTemperature.textContent = `${convertToCelsius(
+    targetTemperature.textContent = `${convertToCelsiusFromKelvin(
       data.daily[positionInForecast].temp.max
     )}°C `;
 
@@ -245,13 +247,28 @@ const renderResult = function (city) {
 
 // ----- HELPER FUNCTIONS -----
 
-const convertToCelsius = function (kelvin) {
+const convertToCelsiusFromKelvin = function (kelvin) {
   return Math.round(kelvin - 273.15);
 };
 
-const convertToFahrenheit = function (kelvin) {
-  const celsius = convertToCelsius(kelvin);
+const convertToCelsiusFromFahrenheit = function (fahrenheit) {
+  return Math.round((fahrenheit - 32) * (5 / 9));
+};
+
+const convertToFahrenheitFromCelsius = function (celsius) {
   return Math.round(celsius * (9 / 5) + 32);
+};
+
+const convertDisplayToFahrenheit = function (target) {
+  let temp = Number(target.textContent.split("°")[0]);
+  let fahrenheitConversion = convertToFahrenheitFromCelsius(temp);
+  target.textContent = String(fahrenheitConversion) + "°F";
+};
+
+const convertDisplayToCelsius = function (target) {
+  let temp = Number(target.textContent.split("°")[0]);
+  let celsiusConversion = convertToCelsiusFromFahrenheit(temp);
+  target.textContent = String(celsiusConversion) + "°C";
 };
 
 const getCurrentDay = function () {
@@ -259,11 +276,16 @@ const getCurrentDay = function () {
   return currentDate.getDay();
 };
 
-const convertTimestamp = function (timestamp) {
-  const date = new Date(timestamp);
-  return `${String(date.getHours()).padStart(2, "0")}:${String(
-    date.getMinutes()
-  ).padStart(2, "0")}`;
+const convertTimestamp = function (timestamp, timezone) {
+  let date = new Date(timestamp);
+  console.log(`Date first: ${date}`);
+  date = date.toLocaleTimeString("en-UK", { timeZone: timezone });
+  console.log(`Date after: ${date}`);
+
+  return date;
+  // return `${String(date.getHours()).padStart(2, "0")}:${String(
+  //   date.getMinutes()
+  // ).padStart(2, "0")}`;
 };
 
 // ------ APPLICATION LOGIC -----
@@ -301,5 +323,52 @@ searchInput.addEventListener("keyup", () => {
 //  Toggle Celsius/Fahrenheit
 
 temperatureToggle.addEventListener("click", (e) => {
-  console.log(e.target);
+  // HTML Elements to target
+  const mainDisplayTemp = document.querySelector(".main-display__temperature");
+  const forecastTemps = document.querySelectorAll(
+    ".forecast__card__temperature"
+  );
+  const feelsLikeElement = document.querySelector(
+    ".main-display__feels-like__text"
+  );
+  const fahrenheitElement = document.querySelector(
+    ".header__toggle__fahrenheit"
+  );
+  const celsiusElement = document.querySelector(".header__toggle__celsius");
+
+  // Get temp out of feels like string
+  let feelsLikeTemp = feelsLikeElement.textContent.split("°")[0].split("");
+  feelsLikeTemp = feelsLikeTemp.slice(-2, feelsLikeTemp.length).join("");
+
+  // If clicking on already active - return
+  if (e.target.classList.contains("header__toggle__active")) return;
+
+  // If not clicking on Celsius or Fahrenheit - return
+  if (
+    !e.target.classList.contains("header__toggle__celsius") &&
+    !e.target.classList.contains("header__toggle__fahrenheit")
+  )
+    return;
+
+  if (displayCelsius) {
+    convertDisplayToFahrenheit(mainDisplayTemp);
+    forecastTemps.forEach((temp) => {
+      convertDisplayToFahrenheit(temp);
+    });
+    feelsLikeElement.textContent = `Feels Like: ${convertToFahrenheitFromCelsius(
+      Number(feelsLikeTemp)
+    )}°F`;
+  } else {
+    convertDisplayToCelsius(mainDisplayTemp);
+    forecastTemps.forEach((temp) => {
+      convertDisplayToCelsius(temp);
+      feelsLikeElement.textContent = `Feels Like: ${convertToCelsiusFromFahrenheit(
+        Number(feelsLikeTemp)
+      )}°C`;
+    });
+  }
+
+  displayCelsius = !displayCelsius;
+  celsiusElement.classList.toggle("header__toggle__active");
+  fahrenheitElement.classList.toggle("header__toggle__active");
 });

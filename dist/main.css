@@ -43,7 +43,7 @@ html {
   background-color: #f2f2f2;
   outline: none;
   border: none;
-  width: 30vw;
+  width: 60rem;
   transition: all 0.3s;
   border-radius: 0.6rem;
 }
@@ -71,9 +71,9 @@ html {
   display: flex;
   align-content: center;
   justify-content: space-between;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   left: 2px;
-  width: 28.2vw;
+  width: 57rem;
   padding: 1.5rem 2.25rem;
   color: #444;
   background-color: #f2f2f2;
@@ -108,7 +108,7 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
   margin-top: 10vh;
 }
 .main-display__main {
@@ -120,7 +120,8 @@ html {
 }
 .main-display__extras {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  flex-wrap: wrap;
   font-size: 1.6rem;
 }
 .main-display__extras__container {
@@ -128,7 +129,9 @@ html {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 12vw;
+  width: 30rem;
+  margin: 0 3rem;
+  margin-bottom: 3rem;
 }
 .main-display__extras__widget {
   height: 5rem;
@@ -165,8 +168,9 @@ html {
 .forecast {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   margin-top: 3rem;
 }
 .forecast__header {
@@ -184,7 +188,8 @@ html {
   align-items: center;
   text-transform: uppercase;
   font-size: 1.6rem;
-  margin-bottom: 1rem;
+  margin: 0 3rem;
+  margin-bottom: 3rem;
   width: 7rem;
   padding: 5rem 10rem;
   border: 2px solid #f2f2f2;

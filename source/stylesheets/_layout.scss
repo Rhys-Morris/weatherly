@@ -27,7 +27,7 @@
       background-color: $font-text;
       outline: none;
       border: none;
-      width: 30vw;
+      width: 60rem;
       transition: all 0.3s;
       border-radius: 0.6rem;
     }
@@ -56,9 +56,9 @@
         display: flex;
         align-content: center;
         justify-content: space-between;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         left: 2px;
-        width: 28.2vw;
+        width: 57rem;
         padding: 1.5rem 2.25rem;
         color: #444;
         background-color: $font-text;
@@ -103,7 +103,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
   margin-top: 10vh;
 
   &__main {
@@ -116,7 +116,8 @@
 
   &__extras {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    flex-wrap: wrap;
     font-size: 1.6rem;
 
     &__container {
@@ -124,7 +125,9 @@
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
-      width: 12vw;
+      width: 30rem;
+      margin: 0 3rem;
+      margin-bottom: 3rem;
     }
 
     &__widget {
@@ -178,8 +181,9 @@
 .forecast {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   margin-top: 3rem;
 
   &__header {
@@ -197,7 +201,8 @@
     align-items: center;
     text-transform: uppercase;
     font-size: 1.6rem;
-    margin-bottom: 1rem;
+    margin: 0 3rem;
+    margin-bottom: 3rem;
     width: 7rem;
     padding: 5rem 10rem;
     border: 2px solid $font-text;
