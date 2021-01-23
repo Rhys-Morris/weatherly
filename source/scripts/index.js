@@ -60,7 +60,7 @@ const getWeather = function (url) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data); // DELETE WHEN FINISHED
-      renderCurrentLocation(data.name);
+      renderCurrentLocation(data.name, data.sys.country);
       renderCurrentTemperature(convertToCelsiusFromKelvin(data.main.temp));
       renderWeatherDescription(data.weather[0].description);
       renderIcon(data.weather[0].icon);
@@ -93,9 +93,18 @@ const getForecast = function (url) {
 
 // MAIN DISPLAY
 
-const renderCurrentLocation = function (location) {
-  const locationDisplay = document.querySelector(".main-display__location");
+const renderCurrentLocation = function (location, country) {
+  const locationDisplay = document.querySelector(
+    ".main-display__location__text"
+  );
   locationDisplay.textContent = location;
+  const locationFlag = document.createElement("img");
+
+  console.log(country);
+
+  locationFlag.className = "main-display__location__country";
+  locationFlag.src = `https://www.countryflags.io/${country}/flat/64.png`;
+  locationDisplay.parentNode.appendChild(locationFlag);
 };
 
 const renderCurrentTemperature = function (temperature) {
@@ -222,7 +231,7 @@ const renderResult = function (city) {
   result.appendChild(resultFlag);
   resultsBox.appendChild(result);
 
-  // Add event listener - if clicked
+  // Add event listener - if clicked                    // THIS NEEDS TO BE DELEGATED TO PARENT
   result.addEventListener("click", function () {
     // Remove widgets
     document
@@ -240,8 +249,10 @@ const renderResult = function (city) {
       `https://api.openweathermap.org/data/2.5/onecall?lat=${this.dataset.latitide}&lon=${this.dataset.longitude}&exlude=minutely,hourly&appid=16c3e8bb211544cefedaf6ff65aa87c5`
     );
 
-    // Remove results
+    // Remove results & current flag
     resultsBox.innerHTML = "";
+    const flag = document.querySelector(".main-display__location__country");
+    flag.parentNode.removeChild(flag);
   });
 };
 
@@ -278,14 +289,15 @@ const getCurrentDay = function () {
 
 const convertTimestamp = function (timestamp, timezone) {
   let date = new Date(timestamp);
-  console.log(`Date first: ${date}`);
   date = date.toLocaleTimeString("en-UK", { timeZone: timezone });
-  console.log(`Date after: ${date}`);
+  date = date.split(":");
 
-  return date;
-  // return `${String(date.getHours()).padStart(2, "0")}:${String(
-  //   date.getMinutes()
-  // ).padStart(2, "0")}`;
+  // Get am or pm from string and remove seconds
+  let twelveHourTime = date[2].split(" ")[1];
+
+  date.splice(1, 1);
+
+  return date.join(":");
 };
 
 // ------ APPLICATION LOGIC -----
@@ -293,6 +305,11 @@ const convertTimestamp = function (timestamp, timezone) {
 // Get weather Data for current location - if not possible, default to Melbourne, Aus
 
 getCurrentLocation();
+
+if (window.screen.width < 750) {
+  document.querySelector(".header__toggle__fahrenheit").textContent = "°F";
+  document.querySelector(".header__toggle__celsius").textContent = "°C";
+}
 
 // ----- EVENT LISTENERS -----
 
@@ -309,7 +326,6 @@ searchInput.addEventListener("keyup", () => {
   filteredCities = cities
     .filter((city) => city.name.toLowerCase().match(selectedCity))
     .slice(0, 10);
-  console.log(filteredCities);
 
   // Empty search results prior to repopulating
   resultsBox.innerHTML = "";

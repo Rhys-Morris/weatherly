@@ -12,6 +12,11 @@ html {
   box-sizing: border-box;
   color: #f2f2f2;
 }
+@media only screen and (max-width: 500px) {
+  html {
+    font-size: 56.25%;
+  }
+}
 
 .wrapper {
   display: flex;
@@ -21,6 +26,12 @@ html {
   width: 90vw;
   padding: 0 5vw;
   min-height: 100vh;
+}
+@media only screen and (max-width: 375px) {
+  .wrapper {
+    width: 95vw;
+    padding: 0 2.5vw;
+  }
 }
 
 .header {
@@ -47,6 +58,37 @@ html {
   transition: all 0.3s;
   border-radius: 0.6rem;
 }
+@media only screen and (max-width: 1050px) {
+  .header__search__input {
+    width: 40rem;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .header__search__input {
+    font-size: 1.4rem;
+    padding: 1.2rem 2rem;
+  }
+}
+@media only screen and (max-width: 620px) {
+  .header__search__input {
+    width: 27.5rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .header__search__input {
+    padding: 1.5rem 2.5rem;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .header__search__input {
+    width: 22.5rem;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .header__search__input {
+    width: 17.5rem;
+  }
+}
 .header__search__submit {
   position: absolute;
   right: -2rem;
@@ -58,10 +100,38 @@ html {
   background: #f2f2f2;
   outline: none;
 }
+@media only screen and (max-width: 750px) {
+  .header__search__submit {
+    top: -0.75rem;
+    height: 6rem;
+    width: 6rem;
+    right: -1rem;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .header__search__submit {
+    top: 0.8rem;
+    right: 1rem;
+    height: 3rem;
+    width: 3rem;
+    border: 1px solid #f2f2f2;
+  }
+}
 .header__search__icon {
   height: 3rem;
   position: relative;
   top: 0.1rem;
+}
+@media only screen and (max-width: 750px) {
+  .header__search__icon {
+    height: 2.5rem;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .header__search__icon {
+    height: 2rem;
+    width: 2rem;
+  }
 }
 .header__search__results {
   position: absolute;
@@ -71,6 +141,7 @@ html {
   display: flex;
   align-content: center;
   justify-content: space-between;
+  z-index: 1000;
   font-size: 1.6rem;
   left: 2px;
   width: 57rem;
@@ -78,10 +149,43 @@ html {
   color: #444;
   background-color: #f2f2f2;
   border-top: 3px solid #0a2646;
+  border-left: 1px solid #0a2646;
 }
 .header__search__results__city:hover {
   cursor: pointer;
   background-color: #bfbfbf;
+}
+@media only screen and (max-width: 1050px) {
+  .header__search__results__city {
+    width: 37.5rem;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .header__search__results__city {
+    font-size: 1.4rem;
+    width: 35rem;
+    padding: 1rem 1.75rem;
+  }
+}
+@media only screen and (max-width: 620px) {
+  .header__search__results__city {
+    width: 23rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .header__search__results__city {
+    padding: 1.5rem 2.25rem;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .header__search__results__city {
+    width: 18.5rem;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .header__search__results__city {
+    width: 15.5rem;
+  }
 }
 .header__toggle {
   display: flex;
@@ -89,15 +193,13 @@ html {
   font-size: 2rem;
 }
 .header__toggle__celsius, .header__toggle__fahrenheit {
+  padding: 0 1rem;
   padding-bottom: 1rem;
   transition: all 0.2s;
 }
 .header__toggle__celsius:hover, .header__toggle__fahrenheit:hover {
   color: #bfbfbf;
   cursor: pointer;
-}
-.header__toggle__celsius {
-  margin-right: 1rem;
 }
 .header__toggle__active {
   border-bottom: 2px solid #f2f2f2;
@@ -117,6 +219,7 @@ html {
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 5vh;
+  width: 100%;
 }
 .main-display__extras {
   display: flex;
@@ -127,11 +230,18 @@ html {
 .main-display__extras__container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 30rem;
-  margin: 0 3rem;
-  margin-bottom: 3rem;
+  margin: 0 1rem;
+  margin-bottom: 2rem;
+}
+@media only screen and (max-width: 750px) {
+  .main-display__extras__container {
+    width: 25rem;
+    margin: 0 0.5rem;
+    margin-bottom: 2rem;
+  }
 }
 .main-display__extras__widget {
   height: 5rem;
@@ -141,9 +251,28 @@ html {
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 300;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+@media only screen and (max-width: 750px) {
+  .main-display__location {
+    flex-direction: column-reverse;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .main-display__location__text {
+    text-align: center;
+    width: 100%;
+  }
+}
+.main-display__location__country {
+  margin-left: 1.5rem;
 }
 .main-display__description {
-  font-size: 2rem;
+  font-size: 2.4rem;
   letter-spacing: 2px;
   padding-bottom: 1rem;
 }
@@ -152,7 +281,7 @@ html {
   font-weight: 200;
 }
 .main-display__feels-like__text, .main-display__humidity__text, .main-display__wind__text, .main-display__uv__text, .main-display__sunset__text, .main-display__sunrise__text {
-  font-size: 2rem;
+  font-size: 2.2rem;
   text-align: center;
 }
 .main-display__sunset__widget, .main-display__sunrise__widget, .main-display__feels-like__widget, .main-display__uv__widget, .main-display__wind__widget, .main-display__humidity__widget {
@@ -175,6 +304,7 @@ html {
 }
 .forecast__header {
   text-transform: uppercase;
+  text-align: center;
   font-size: 3rem;
   font-weight: 300;
   letter-spacing: 2px;
@@ -209,6 +339,12 @@ html {
   height: 8rem;
   position: relative;
   margin-bottom: 1rem;
+}
+
+.footer {
+  font-size: 1.4rem;
+  font-weight: 400;
+  padding: 1rem 0;
 }
 
 /*# sourceMappingURL=main.css.map */

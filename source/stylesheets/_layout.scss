@@ -6,6 +6,11 @@
   width: 90vw;
   padding: 0 5vw;
   min-height: 100vh;
+
+  @media only screen and (max-width: 375px) {
+    width: 95vw;
+    padding: 0 2.5vw;
+  }
 }
 
 .header {
@@ -30,6 +35,31 @@
       width: 60rem;
       transition: all 0.3s;
       border-radius: 0.6rem;
+
+      @media only screen and (max-width: 1050px) {
+        width: 40rem;
+      }
+
+      @media only screen and (max-width: 750px) {
+        font-size: 1.4rem;
+        padding: 1.2rem 2rem;
+      }
+
+      @media only screen and (max-width: 620px) {
+        width: 27.5rem;
+      }
+
+      @media only screen and (max-width: 500px) {
+        padding: 1.5rem 2.5rem;
+      }
+
+      @media only screen and (max-width: 450px) {
+        width: 22.5rem;
+      }
+
+      @media only screen and (max-width: 350px) {
+        width: 17.5rem;
+      }
     }
     &__submit {
       position: absolute;
@@ -41,12 +71,36 @@
       border-radius: 50%;
       background: $font-text;
       outline: none;
+
+      @media only screen and (max-width: 750px) {
+        top: -0.75rem;
+        height: 6rem;
+        width: 6rem;
+        right: -1rem;
+      }
+
+      @media only screen and (max-width: 375px) {
+        top: 0.8rem;
+        right: 1rem;
+        height: 3rem;
+        width: 3rem;
+        border: 1px solid $font-text;
+      }
     }
 
     &__icon {
       height: 3rem;
       position: relative;
       top: 0.1rem;
+
+      @media only screen and (max-width: 750px) {
+        height: 2.5rem;
+      }
+
+      @media only screen and (max-width: 375px) {
+        height: 2rem;
+        width: 2rem;
+      }
     }
 
     &__results {
@@ -56,6 +110,7 @@
         display: flex;
         align-content: center;
         justify-content: space-between;
+        z-index: 1000;
         font-size: 1.6rem;
         left: 2px;
         width: 57rem;
@@ -63,10 +118,37 @@
         color: #444;
         background-color: $font-text;
         border-top: 3px solid $color-background-base;
+        border-left: 1px solid $color-background-base;
 
         &:hover {
           cursor: pointer;
           background-color: #bfbfbf;
+        }
+
+        @media only screen and (max-width: 1050px) {
+          width: 37.5rem;
+        }
+
+        @media only screen and (max-width: 750px) {
+          font-size: 1.4rem;
+          width: 35rem;
+          padding: 1rem 1.75rem;
+        }
+
+        @media only screen and (max-width: 620px) {
+          width: 23rem;
+        }
+
+        @media only screen and (max-width: 500px) {
+          padding: 1.5rem 2.25rem;
+        }
+
+        @media only screen and (max-width: 450px) {
+          width: 18.5rem;
+        }
+
+        @media only screen and (max-width: 350px) {
+          width: 15.5rem;
         }
       }
     }
@@ -79,6 +161,7 @@
 
     &__celsius,
     &__fahrenheit {
+      padding: 0 1rem;
       padding-bottom: 1rem;
       transition: all 0.2s;
 
@@ -86,10 +169,6 @@
         color: #bfbfbf;
         cursor: pointer;
       }
-    }
-
-    &__celsius {
-      margin-right: 1rem;
     }
 
     &__active {
@@ -112,6 +191,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 5vh;
+    width: 100%;
   }
 
   &__extras {
@@ -123,11 +203,17 @@
     &__container {
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       width: 30rem;
-      margin: 0 3rem;
-      margin-bottom: 3rem;
+      margin: 0 1rem;
+      margin-bottom: 2rem;
+
+      @media only screen and (max-width: 750px) {
+        width: 25rem;
+        margin: 0 0.5rem;
+        margin-bottom: 2rem;
+      }
     }
 
     &__widget {
@@ -140,9 +226,29 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 300;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    @media only screen and (max-width: 750px) {
+      flex-direction: column-reverse;
+    }
+
+    &__text {
+      @media only screen and (max-width: 750px) {
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    &__country {
+      margin-left: 1.5rem;
+    }
   }
   &__description {
-    font-size: 2rem;
+    font-size: 2.4rem;
     letter-spacing: 2px;
     padding-bottom: 1rem;
   }
@@ -157,7 +263,7 @@
   &__uv__text,
   &__sunset__text,
   &__sunrise__text {
-    font-size: 2rem;
+    font-size: 2.2rem;
     text-align: center;
   }
 
@@ -188,6 +294,7 @@
 
   &__header {
     text-transform: uppercase;
+    text-align: center;
     font-size: 3rem;
     font-weight: 300;
     letter-spacing: 2px;
@@ -225,4 +332,10 @@
       }
     }
   }
+}
+
+.footer {
+  font-size: 1.4rem;
+  font-weight: 400;
+  padding: 1rem 0;
 }
