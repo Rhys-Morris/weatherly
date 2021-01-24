@@ -102,8 +102,9 @@ const getForecast = function (url) {
       renderSunset(data.current.sunset, data.timezone);
 
       // Reveal app on first load
-      if ((wrapperDiv.style.display = "hidden")) console.log("Revealing app");
-      wrapperDiv.style.display = "flex";
+      if ((wrapperDiv.style.visibility = "hidden"))
+        console.log("Revealing app");
+      wrapperDiv.style.visibility = "visible";
     })
     .catch((err) =>
       console.error("Error whilst attempting to fetch weather data")

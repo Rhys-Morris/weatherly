@@ -11,6 +11,7 @@ html {
   font-weight: 300;
   box-sizing: border-box;
   color: #f2f2f2;
+  background: #0a2646;
 }
 @media only screen and (max-width: 500px) {
   html {
@@ -20,12 +21,14 @@ html {
 
 .wrapper {
   display: flex;
+  visibility: hidden;
   flex-direction: column;
   align-items: center;
   background: #0a2646;
   width: 90vw;
   padding: 0 5vw;
   min-height: 100vh;
+  transition: 1s all;
 }
 @media only screen and (max-width: 375px) {
   .wrapper {
