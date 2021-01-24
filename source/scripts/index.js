@@ -43,6 +43,15 @@ const temperatureToggle = document.querySelector(".header__toggle");
 
 // ---------- API REQUESTS -----------
 
+const loadStart = function () {
+  getWeather(
+    `https://api.openweathermap.org/data/2.5/weather?lat=-37.81&lon=144.93&appid=16c3e8bb211544cefedaf6ff65aa87c5`
+  );
+  getForecast(
+    `https://api.openweathermap.org/data/2.5/onecall?lat=-37.81&lon=144.93&exlude=minutely,hourly&appid=16c3e8bb211544cefedaf6ff65aa87c5`
+  );
+};
+
 const getCurrentLocation = function () {
   navigator.geolocation.getCurrentPosition((data) => {
     const { latitude, longitude } = data.coords;
@@ -302,9 +311,11 @@ const convertTimestamp = function (timestamp, timezone) {
 
 // ------ APPLICATION LOGIC -----
 
-// Get weather Data for current location - if not possible, default to Melbourne, Aus
+// Load Melb initially, then try to get current location
 
-getCurrentLocation();
+loadStart();
+
+// getCurrentLocation();
 
 if (window.screen.width < 750) {
   document.querySelector(".header__toggle__fahrenheit").textContent = "°F";
