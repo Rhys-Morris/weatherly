@@ -40,6 +40,14 @@ let displayCelsius = true;
 const searchInput = document.querySelector(".header__search__input");
 const resultsBox = document.querySelector(".header__search__results");
 const temperatureToggle = document.querySelector(".header__toggle");
+const wrapperDiv = document.querySelector(".wrapper");
+
+// ADJUST FOR SCREEN SIZE
+
+if (window.screen.width < 750) {
+  document.querySelector(".header__toggle__fahrenheit").textContent = "°F";
+  document.querySelector(".header__toggle__celsius").textContent = "°C";
+}
 
 // ---------- API REQUESTS -----------
 
@@ -92,10 +100,14 @@ const getForecast = function (url) {
       renderUv(data.daily[0].uvi);
       renderSunrise(data.current.sunrise, data.timezone);
       renderSunset(data.current.sunset, data.timezone);
-    });
-  // .catch((err) =>
-  //   console.error("Error whilst attempting to fetch weather data")
-  // );
+
+      // Reveal app on first load
+      if ((wrapperDiv.style.display = "hidden")) console.log("Revealing app");
+      wrapperDiv.style.display = "flex";
+    })
+    .catch((err) =>
+      console.error("Error whilst attempting to fetch weather data")
+    );
 };
 
 // ----------- RENDER FUNCTIONS -----------

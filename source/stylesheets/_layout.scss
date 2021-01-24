@@ -1,11 +1,12 @@
 .wrapper {
-  display: flex;
+  display: hidden;
   flex-direction: column;
   align-items: center;
   background: $color-background-base;
   width: 90vw;
   padding: 0 5vw;
   min-height: 100vh;
+  transition: 1s;
 
   @media only screen and (max-width: 375px) {
     width: 95vw;
