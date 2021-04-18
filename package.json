@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass:watch": "sass source/stylesheets/main.scss dist/main.css --watch"
+    "sass:watch": "sass source/stylesheets/main.scss dist/main.css --watch",
+    "build": "webpack",
+    "start": "webpack serve"
   },
   "author": "Rhys Morris",
   "license": "ISC",

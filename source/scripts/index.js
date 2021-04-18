@@ -1,5 +1,3 @@
-import cities from "cities.json";
-
 // ---------- GLOBAL VARIABLES -----------
 
 const weekdays = {
@@ -33,7 +31,6 @@ const weatherIcons = {
   "50n": "../source/img/mist.svg",
 };
 
-let filteredCities = [];
 let displayCelsius = true;
 
 // HTML Elements
@@ -76,7 +73,6 @@ const getWeather = function (url) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data); // DELETE WHEN FINISHED
       renderCurrentLocation(data.name, data.sys.country);
       renderCurrentTemperature(convertToCelsiusFromKelvin(data.main.temp));
       renderWeatherDescription(data.weather[0].description);
@@ -94,7 +90,6 @@ const getForecast = function (url) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data); // DELETE WHEN FINISHED
 
       renderForecast(getCurrentDay(), data);
       renderUv(data.daily[0].uvi);
@@ -103,7 +98,6 @@ const getForecast = function (url) {
 
       // Reveal app on first load
       if ((wrapperDiv.style.visibility = "hidden"))
-        console.log("Revealing app");
       wrapperDiv.style.visibility = "visible";
     })
     .catch((err) =>
@@ -121,8 +115,6 @@ const renderCurrentLocation = function (location, country) {
   );
   locationDisplay.textContent = location;
   const locationFlag = document.createElement("img");
-
-  console.log(country);
 
   locationFlag.className = "main-display__location__country";
   locationFlag.src = `https://www.countryflags.io/${country}/flat/64.png`;
@@ -182,7 +174,6 @@ const renderUv = function (uv) {
 };
 
 const renderSunrise = function (sunrise, timezone) {
-  console.log(timezone);
   const sunriseDisplay = document.querySelector(".main-display__sunrise__text");
   const timeString = convertTimestamp(sunrise * 1000, timezone);
   sunriseDisplay.innerHTML = `Sunrise:  ${timeString}`;
@@ -324,11 +315,11 @@ const convertTimestamp = function (timestamp, timezone) {
 
 // ------ APPLICATION LOGIC -----
 
-// Load Melb initially, then try to get current location
+// Load Melbourne or current location
 
 loadStart();
 
-// getCurrentLocation();
+// getCurrentLocation();  // Currently not using Geolocation API
 
 if (window.screen.width < 750) {
   document.querySelector(".header__toggle__fahrenheit").textContent = "°F";
@@ -346,18 +337,21 @@ searchInput.addEventListener("keyup", () => {
     return;
   }
 
-  // Filter possible cities and reduce ot list of ten
-  filteredCities = cities
-    .filter((city) => city.name.toLowerCase().match(selectedCity))
-    .slice(0, 10);
+  fetch('https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json')
+    .then(res => res.json())
+    .then(cities => {
+      return cities
+      .filter((city) => city.name.toLowerCase().match(selectedCity))
+      .sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
+      .slice(0, 10);
+    }).then(filteredCities => {
+        // Empty search results prior to repopulating
+        resultsBox.innerHTML = "";
 
-  // Empty search results prior to repopulating
-  resultsBox.innerHTML = "";
-
-  // Render new result for each city
-  filteredCities.forEach(function (city) {
-    renderResult(city);
-  });
+        filteredCities.forEach(function (city) {
+          renderResult(city);
+        })
+    });
 });
 
 //  Toggle Celsius/Fahrenheit
